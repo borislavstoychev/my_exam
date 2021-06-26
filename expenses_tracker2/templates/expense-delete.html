@@ -1,0 +1,23 @@
+{% extends 'shared/main.html' %}
+{% block sait_contents %}
+    <div class="body">
+        
+<h1>Delete Expense</h1>
+<div class="form">
+    <form method="POST">
+        {% csrf_token %}
+{#        {{ form }}#}
+        <label for="name">Title</label>
+            {{ form.title }}
+        <label for="description">Description</label>
+            {{ form.description }}
+        <label for="image_url">Link to Image</label>
+            {{ form.image_url }}
+        <label for="price">Price</label>
+            {{ form.price }}
+        <input type="submit" value="Delete">
+    </form>
+</div>
+
+    </div>
+{% endblock %}

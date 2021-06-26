@@ -1,0 +1,21 @@
+{% extends 'shared/main.html' %}
+{% block sait_contents %}
+    <div class="body">
+        
+<h1>Enter your new data</h1>
+<div class="form">
+    <form method="POST" action="{% url 'profile edit page' profile.id %}">
+        {% csrf_token %}
+{#        {{ form }}#}
+        <label for="budget">Budget</label>
+            {{ form.budget }}
+        <label for="firstName">First Name</label>
+            {{ form.first_name }}
+        <label for="lastName">Last Name</label>
+            {{ form.last_name }}
+        <input type="submit" value="Edit">
+    </form>
+</div>
+
+    </div>
+{% endblock %}
