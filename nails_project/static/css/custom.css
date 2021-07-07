@@ -90,5 +90,23 @@ h2 {
     transform: translate(-50%, -50%);
 }
 
+.heart-o {
+    content: "";
+    background-size: contain;
+    width: 35px;
+    height: 30px;
+    background: url(/static/images/heart2.svg) no-repeat 50%;
+    cursor: pointer;
+}
+
+.heart {
+    content: "";
+    background-size: contain;
+    width: 35px;
+    height: 30px;
+    background: url(/static/images/heart.svg) no-repeat 50%;
+    cursor: pointer;
+}
+
 
 
