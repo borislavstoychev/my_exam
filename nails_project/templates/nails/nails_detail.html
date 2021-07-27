@@ -1,8 +1,6 @@
+{% extends 'nails/base.html' %}
 {% load static %}
-{% include 'common/header.html' %}
-{% block site_content %}
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/custom.html' %}">
+{% block content %}
     <div class="container">
         <div class="d-flex">
             <div class="d-inline p-2 w-50">
@@ -24,7 +22,7 @@
                 <p class="mt-2">Likes: {{ nail.likes_count }}</p>
             </div>
         </div>
-        <div class="d-block" style="background-color: #f8c2da; padding:2%; border-radius: 15px">
+        <div class="form-control">
             {% if nail.comment_set.count %}
                 {% for coment in nail.comment_set.all %}
                     <div class="box">
@@ -38,7 +36,7 @@
                 </div>
             {% endif %}
             <div class="box">
-                <form method="post">
+                <form method="post" >
                     {% csrf_token %}
                     {{ comment_form }}
                     <button class="btn btn-primary mt-2" type="submit">Add comment</button>

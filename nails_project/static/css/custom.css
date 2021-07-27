@@ -108,5 +108,9 @@ h2 {
     cursor: pointer;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 
 

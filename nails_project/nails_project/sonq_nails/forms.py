@@ -1,6 +1,6 @@
 from django import forms
 
-from nails_project.sonq_nails.models import Nail
+from nails_project.sonq_nails.models import Nails
 
 
 class NailForm(forms.ModelForm):
@@ -8,11 +8,11 @@ class NailForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         for (_, field) in self.fields.items():
-            if field.widget == "type":
+            if _ == "type":
                 field.widget.attrs['class'] = 'form-select'
             else:
                 field.widget.attrs['class'] = 'form-control'
 
     class Meta:
-        model = Nail
-        fields = "__all__"
+        model = Nails
+        exclude = ('user', 'is_complete')

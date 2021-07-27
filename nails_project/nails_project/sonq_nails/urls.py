@@ -1,13 +1,13 @@
 from django.urls import path
 
-from nails_project.sonq_nails.views import index, like_nail, nail_all, nail_detail, create, edit, delete
+from nails_project.sonq_nails import views
 
 urlpatterns = [
-    path('', index, name='home'),
-    path('all-nails/', nail_all, name='list nails'),
-    path('nail-details/<int:pk>/', nail_detail, name='nail details'),
-    path('like/<int:pk>/', like_nail, name='like nail'),
-    path('create/', create, name='create'),
-    path('edit/<int:pk>', edit, name='edit'),
-    path('delete/<int:pk>', delete, name='delete')
+    path('', views.index, name='home'),
+    path('all-nails/', views.nails_all, name='list nails'),
+    path('nail-details/<int:pk>/', views.nail_detail, name='nail details'),
+    path('like/<int:pk>/', views.like_nail, name='like nail'),
+    path('create/', views.create, name='create'),
+    path('edit/<int:pk>', views.edit, name='edit'),
+    path('delete/<int:pk>', views.delete, name='delete')
 ]

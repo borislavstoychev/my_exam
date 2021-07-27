@@ -20,5 +20,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('nails_project.sonq_nails.urls'))
+    path('', include('nails_project.sonq_nails.urls')),
+    path('account/', include('nails_project.accounts.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
