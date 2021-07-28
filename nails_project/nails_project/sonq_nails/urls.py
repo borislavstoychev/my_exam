@@ -9,5 +9,5 @@ urlpatterns = [
     path('like/<int:pk>/', views.NailsLikeView.as_view(), name='like nail'),
     path('create/', views.NailsCreateView.as_view(), name='create'),
     path('edit/<int:pk>', views.NailsEditView.as_view(), name='edit'),
-    path('delete/<int:pk>', views.delete, name='delete')
+    path('delete/<int:pk>', views.NailsDeleteView.as_view(), name='delete')
 ]

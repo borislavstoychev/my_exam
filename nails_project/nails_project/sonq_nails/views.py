@@ -3,7 +3,6 @@ from django.views import generic
 from django.contrib.auth import mixins as auth_mixins
 from django.urls import reverse_lazy
 from nails_project.common.forms import CommentForm
-from nails_project.common.models import Comment
 from nails_project.sonq_nails.forms import NailForm
 from nails_project.sonq_nails.models import Nails, Like
 
@@ -41,7 +40,7 @@ class NailsDetailsView(generic.DetailView):
         return context
 
 
-class NailsLikeView(generic.View):
+class NailsLikeView(auth_mixins.LoginRequiredMixin, generic.View):
 
     def get(self, request, **kwargs):
         user_profile = self.request.user
@@ -57,6 +56,13 @@ class NailsLikeView(generic.View):
             like.save()
 
         return redirect('nail details', nails.id)
+
+    def dispatch(self, request, *args, **kwargs):
+        user_profile = self.request.user
+        nails = Nails.objects.get(pk=kwargs['pk'])
+        if nails.user_id == user_profile.id:
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
 
 
 class NailsCreateView(auth_mixins.LoginRequiredMixin, generic.CreateView):
@@ -76,7 +82,7 @@ class NailsCreateView(auth_mixins.LoginRequiredMixin, generic.CreateView):
         # return redirect('pet details or comment', pet.id)
 
 
-class NailsEditView(generic.UpdateView):
+class NailsEditView(auth_mixins.LoginRequiredMixin, generic.UpdateView):
     template_name = 'nails/nails_edit.html'
     model = Nails
     form_class = NailForm
@@ -85,11 +91,21 @@ class NailsEditView(generic.UpdateView):
         url = reverse_lazy('nail details', kwargs={'pk': self.object.id})
         return url
 
+    def dispatch(self, request, *args, **kwargs):
+        nails = self.get_object()
+        if nails.user_id != request.user.id:
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
 
-def delete(request, pk):
-    nail = Nails.objects.get(pk=pk)
-    if request.method == "GET":
-        return render(request, 'nails/nails_delete.html', {'pet': nail})
-    else:
-        nail.delete()
-        return redirect('list nails')
+
+class NailsDeleteView(auth_mixins.LoginRequiredMixin, generic.DeleteView):
+    model = Nails
+    template_name = 'nails/nails_delete.html'
+    success_url = reverse_lazy('list nails')
+
+    def dispatch(self, request, *args, **kwargs):
+        nails = self.get_object()
+        if nails.user_id != request.user.id:
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
+
