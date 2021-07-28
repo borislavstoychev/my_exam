@@ -4,27 +4,27 @@
     <div class="container">
         <div class="d-flex">
             <div class="d-inline p-2 w-50">
-                <img src="{{ nail.image.url }}" class="w-50 rounded mx-auto d-block" alt="{{ nail.description }}">
+                <img src="{{ nails.image.url }}" class="w-50 rounded mx-auto d-block" alt="{{ nails.description }}">
             </div>
             <div class="d-inline p-2 w-50">
                 <div class="d-flex justify-content-between">
-                    <h5><u>Type:</u> {{ nail.type }}</h5>
-                    <h5><u>Title:</u> {{ nail.title }}</h5>
+                    <h5><u>Type:</u> {{ nails.type }}</h5>
+                    <h5><u>Title:</u> {{ nails.title }}</h5>
                 </div>
-                <p class="mt-2">Description: {{ nail.description }}</p>
+                <p class="mt-2">Description: {{ nails.description }}</p>
                 <div>
-                    <a href="{% url 'edit' nail.pk %}" class="btn btn-success">Edit</a>
-                    <a href="{% url 'delete' nail.pk %}" class="btn btn-danger">Delete</a>
+                    <a href="{% url 'edit' nails.pk %}" class="btn btn-success">Edit</a>
+                    <a href="{% url 'delete' nails.pk %}" class="btn btn-danger">Delete</a>
                 </div>
                 <p></p>
-                <a href="{% url 'like nail' nail.id %}"><img src="{% static 'images/heart2.svg' %}"
+                <a href="{% url 'like nail' nails.id %}"><img src="{% static 'images/heart2.svg' %}"
                                                              style="width: 35px; height: 30px;"></a>
-                <p class="mt-2">Likes: {{ nail.likes_count }}</p>
+                <p class="mt-2">Likes: {{ nails.likes_count }}</p>
             </div>
         </div>
         <div class="form-control">
-            {% if nail.comment_set.count %}
-                {% for coment in nail.comment_set.all %}
+            {% if comments %}
+                {% for coment in comments %}
                     <div class="box">
                         <h5><em>{{ coment.comment }}</em></h5>
                         <hr>
@@ -36,7 +36,7 @@
                 </div>
             {% endif %}
             <div class="box">
-                <form method="post" >
+                <form method="post" action="{% url 'comment nails' nails.id %}" >
                     {% csrf_token %}
                     {{ comment_form }}
                     <button class="btn btn-primary mt-2" type="submit">Add comment</button>

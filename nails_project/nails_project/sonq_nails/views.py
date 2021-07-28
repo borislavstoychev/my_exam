@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import generic
+from django.contrib.auth import mixins as auth_mixins
 # Create your views here.
 from nails_project.common.forms import CommentForm
 from nails_project.common.models import Comment
@@ -7,82 +8,55 @@ from nails_project.sonq_nails.forms import NailForm
 from nails_project.sonq_nails.models import Nails, Like
 
 
-def index(request):
-    return render(request, 'nails/index.html')
+class NailsListView(generic.ListView):
+    model = Nails
+    template_name = 'nails/nails_list.html'
+    context_object_name = 'nails'
 
 
-def nails_all(request):
-    context = {
-        'nails': Nails.objects.all(),
-    }
-    return render(request, "nails/nails_list.html", context)
-
-
-class NailsCreateView(generic.CreateView):
-    model = Comment
+class NailsCommentView(auth_mixins.LoginRequiredMixin, generic.FormView):
     form_class = CommentForm
-    template_name = 'nails/nails_detail.html'
-    fields = "__all__"
+
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.user = self.request.user
+        comment.nails = Nails.objects.get(pk=self.kwargs['pk'])
+        comment.save()
+        return redirect('nail details', self.kwargs['pk'])
 
 
-class NailsDetailsView(generic.detail.SingleObjectMixin, generic.ListView):
+class NailsDetailsView(generic.DetailView):
     model = Nails
     template_name = 'nails/nails_detail.html'
-    object = None
-
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object(queryset=Nails.objects.all())
-        return super().get(request, *args, **kwargs)
+    context_object_name = 'nails'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['nail'] = self.object
+        nails = context[self.context_object_name]
+        nails.likes_count = nails.like_set.count()
         context['comment_form'] = CommentForm()
+        context['comments'] = nails.comment_set.all()
+        context['is_owner'] = nails.user == self.request.user
+        context['is_liked_by_user'] = nails.like_set.filter(user_id=self.request.user.id).exists()
         return context
 
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        if form.is_valid():
-            comment = Comment(comment=form.cleaned_data['comment'])
-            comment.nail = self.object.nails
-            comment.user = self.request.user
-            comment.save()
-            return redirect("nail details")
 
-        return self.get_context_data()
+class NailsLikeView(generic.View):
 
-def nail_detail(request, pk):
-    nail = Nails.objects.get(pk=pk)
-    nail.likes_count = nail.like_set.count()
-    if request.method == "GET":
-        context = {
-            'nail': nail,
-            'comment_form': CommentForm(),
-        }
-        return render(request, 'nails/nails_detail.html', context)
-    else:
-        comment_form = CommentForm(request.POST)
-        if comment_form.is_valid():
-            comment = Comment(comment=comment_form.cleaned_data['comment'])
-            comment.nail = nail
-            comment.user = request.user
-            comment.save()
-            return redirect("nail details", pk)
+    def get(self, request, **kwargs):
+        user_profile = self.request.user
+        nails = Nails.objects.get(pk=kwargs['pk'])
+        like = nails.like_set.filter(user_id=user_profile.id).first()
+        if like:
+            like.delete()
+        else:
+            like = Like(
+                user=user_profile,
+                nails=nails,
+            )
+            like.save()
 
-        context = {
-            'nail': nail,
-            'comment_form': CommentForm(),
-        }
-        return render(request, 'nails/nails_detail.html', context)
-
-
-def like_nail(request, pk):
-    nail = Nails.objects.get(pk=pk)
-    like = Like(pet=nail)
-    like.nail = nail
-    like.user = request.user
-    like.save()
-    return redirect('nail details', pk)
+        return redirect('nail details', nails.id)
 
 
 def persist(request, nails, template):

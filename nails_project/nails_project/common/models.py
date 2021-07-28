@@ -9,7 +9,7 @@ UserModel = get_user_model()
 
 
 class Comment(models.Model):
-    nail = models.ForeignKey(Nails, on_delete=models.CASCADE)
+    nails = models.ForeignKey(Nails, on_delete=models.CASCADE)
     comment = models.TextField()
     user = models.ForeignKey(
         UserModel,
