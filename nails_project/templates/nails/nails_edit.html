@@ -8,6 +8,8 @@
                 <form method="post" class="furniture-form" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form }}
+                    <p></p>
+                    <img id="img_preview" src="{{ nails.image.url }}" class="w-50 rounded mx-auto d-block" alt=""/>
                     <button class="btn btn-primary mt-2" type="submit">Edit</button>
                 </form>
             </div>

@@ -41,8 +41,11 @@ class ProfileUpdateView(generic.UpdateView):
     model = Profile
     context_object_name = 'profile'  # your own name for the list as a template variable
     form_class = ProfileForm
-    success_url = reverse_lazy('home')
     template_name = 'account/profiles/profile_details.html'
+
+    def get_success_url(self):
+        url = reverse_lazy('profile details', kwargs={'pk': self.request.user.id})
+        return url
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

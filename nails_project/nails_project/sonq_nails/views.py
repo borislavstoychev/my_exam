@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import generic
 from django.contrib.auth import mixins as auth_mixins
-# Create your views here.
+from django.urls import reverse_lazy
 from nails_project.common.forms import CommentForm
 from nails_project.common.models import Comment
 from nails_project.sonq_nails.forms import NailForm
@@ -59,29 +59,31 @@ class NailsLikeView(generic.View):
         return redirect('nail details', nails.id)
 
 
-def persist(request, nails, template):
-    if request.method == "GET":
-        form = NailForm(instance=nails)
-        return render(request, template, {'form': form})
-    else:
-        form = NailForm(request.POST, request.FILES, instance=nails)
-        if form.is_valid():
-            nails = form.save(commit=False)
-            nails.user = request.user
-            nails.save()
-            return redirect('nail details', nails.pk)
+class NailsCreateView(auth_mixins.LoginRequiredMixin, generic.CreateView):
+    template_name = 'nails/nails_create.html'
+    model = Nails
+    form_class = NailForm
 
-        return render(request, template, {'form': form})
+    def get_success_url(self):
+        url = reverse_lazy('nail details', kwargs={'pk': self.object.id})
+        return url
 
-
-def create(request):
-    nails = Nails()
-    return persist(request, nails, 'nails/nails_create.html')
+    def form_valid(self, form):
+        nails = form.save(commit=False)
+        nails.user = self.request.user
+        nails.save()
+        return super().form_valid(form)
+        # return redirect('pet details or comment', pet.id)
 
 
-def edit(request, pk):
-    nails = Nails.objects.get(pk=pk)
-    return persist(request, nails, 'nails/nails_edit.html')
+class NailsEditView(generic.UpdateView):
+    template_name = 'nails/nails_edit.html'
+    model = Nails
+    form_class = NailForm
+
+    def get_success_url(self):
+        url = reverse_lazy('nail details', kwargs={'pk': self.object.id})
+        return url
 
 
 def delete(request, pk):
