@@ -4,7 +4,7 @@
     <div class="container">
         <div class="d-flex">
             <div class="d-inline p-2 w-50">
-                <img src="{{ nails.image.url }}" class="w-50 rounded mx-auto d-block" alt="{{ nails.description }}">
+                <img data-enlargeable width="100" style="cursor: zoom-in" src="{{ nails.image.url }}" class="w-50 rounded mx-auto d-block" alt="{{ nails.description }}">
             </div>
             <div class="d-inline p-2 w-50">
                 <div class="d-flex justify-content-between">
@@ -12,21 +12,31 @@
                     <h5><u>Title:</u> {{ nails.title }}</h5>
                 </div>
                 <p class="mt-2">Description: {{ nails.description }}</p>
-                <div>
-                    <a href="{% url 'edit' nails.pk %}" class="btn btn-success">Edit</a>
-                    <a href="{% url 'delete' nails.pk %}" class="btn btn-danger">Delete</a>
-                </div>
+                {% if is_owner %}
+                    <div>
+                        <a href="{% url 'edit' nails.pk %}" class="btn btn-success">Edit</a>
+                        <a href="{% url 'delete' nails.pk %}" class="btn btn-danger">Delete</a>
+                    </div>
+                {% endif %}
                 <p></p>
-                <a href="{% url 'like nail' nails.id %}"><img src="{% static 'images/heart2.svg' %}"
-                                                             style="width: 35px; height: 30px;"></a>
+                {% if not is_owner %}
+                    {% if not is_liked_by_user %}
+                        <a href="{% url 'like nail' nails.id %}"><img src="{% static 'images/heart2.svg' %}"
+                                                                      style="width: 35px; height: 30px;"></a>
+                    {% else %}
+                        <a href="{% url 'like nail' nails.id %}"><img src="{% static 'images/heart.svg' %}"
+                                                                      style="width: 35px; height: 30px;"></a>
+                    {% endif %}
+                {% endif %}
                 <p class="mt-2">Likes: {{ nails.likes_count }}</p>
             </div>
         </div>
         <div class="form-control">
             {% if comments %}
-                {% for coment in comments %}
+                {% for comment in comments %}
                     <div class="box">
-                        <h5><em>{{ coment.comment }}</em></h5>
+                        <a href="{% url 'profile details' comment.user_id %}">{{ comment.user }}:</a>
+                        <h5><em>{{ comment.comment }}</em></h5>
                         <hr>
                     </div>
                 {% endfor %}
@@ -36,7 +46,7 @@
                 </div>
             {% endif %}
             <div class="box">
-                <form method="post" action="{% url 'comment nails' nails.id %}" >
+                <form method="post" action="{% url 'comment nails' nails.id %}">
                     {% csrf_token %}
                     {{ comment_form }}
                     <button class="btn btn-primary mt-2" type="submit">Add comment</button>
@@ -44,5 +54,5 @@
             </div>
         </div>
     </div>
-    <script src="{% static 'js/heart.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 {% endblock %}

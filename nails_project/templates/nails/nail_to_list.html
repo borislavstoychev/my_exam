@@ -1,6 +1,7 @@
 <div class="col-lg-4">
     <div class="card" style="width: 18rem;">
-        <img src="{{ nail.image.url }}" class="card-img-top" alt="{{ nail.description }}">
+        <img data-enlargeable width="100" style="cursor: zoom-in" src="{{ nail.image.url }}" class="card-img-top"
+             alt="{{ nail.description }}">
         <div class="card-body">
             <h5 class="card-title">{{ nail }}</h5>
             <p class="card-text">{{ nail.description }}</p>
@@ -8,3 +9,4 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

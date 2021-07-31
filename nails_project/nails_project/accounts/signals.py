@@ -18,7 +18,7 @@ def user_created(sender, instance, created, **kwargs):
 
 @receiver(pre_save, sender=Profile)
 def check_is_complete(sender, instance, **kwargs):
-    if instance.first_name and instance.last_name and instance.age:
+    if instance.first_name and instance.last_name and instance.phone_number:
         instance.is_complete = True
     else:
         instance.is_complete = False

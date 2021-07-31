@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.views import generic
 from django.contrib.auth import mixins as auth_mixins
 from django.urls import reverse_lazy
-from nails_project.common.forms import CommentForm
+from nails_project.common.forms import CommentForm, ScheduleForm
+from nails_project.common.models import Schedule
 from nails_project.sonq_nails.forms import NailForm
 from nails_project.sonq_nails.models import Nails, Like
 
@@ -22,6 +23,26 @@ class NailsCommentView(auth_mixins.LoginRequiredMixin, generic.FormView):
         comment.nails = Nails.objects.get(pk=self.kwargs['pk'])
         comment.save()
         return redirect('nail details', self.kwargs['pk'])
+
+
+class ScheduleCreateView(auth_mixins.LoginRequiredMixin, generic.FormView):
+    form_class = ScheduleForm
+    template_name = 'nails/schedule.html'
+
+    def form_valid(self, form):
+        schedule = form.save(commit=False)
+        schedule.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        schedules = Schedule.objects.all()
+        context['schedules'] = schedules
+        return context
+
+    def get_success_url(self):
+        url = reverse_lazy('schedule nails')
+        return url
 
 
 class NailsDetailsView(generic.DetailView):

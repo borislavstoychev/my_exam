@@ -147,3 +147,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = reverse_lazy('sign in user')
 
 AUTH_USER_MODEL = 'accounts.NailsUser'
+
+
+

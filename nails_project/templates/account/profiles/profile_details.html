@@ -2,8 +2,12 @@
 {% load static %}
 {% block content %}
     <div class="text-center">
-        <h1>Hello, {{ profile.first_name }}!</h1>
-        <h5>This is your profile</h5>
+        <h1>Hello, {{ user.profile.first_name }}!</h1>
+        {% if profile.user == user %}
+            <h5>This is your profile</h5>
+        {% else %}
+            <h5>This is {{ profile.user }} profile</h5>
+        {% endif %}
         {% if profile.profile_image %}
             <img class="rounded-circle mb-3" src="{{ profile.profile_image.url }}" alt="" width="140"
                  height="140">
@@ -12,11 +16,13 @@
                  height="140">
         {% endif %}
         <div class="w-50 m-auto">
-            <form method="post" action="{% url 'profile details' user.id %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form }}
-                <button class="btn btn-primary mt-2">Update</button>
-            </form>
+            {% if profile.user == user %}
+                <form method="post" action="{% url 'profile details' user.id %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form }}
+                    <button class="btn btn-primary mt-2">Update</button>
+                </form>
+            {% endif %}
         </div>
     </div>
     <hr>
@@ -41,8 +47,12 @@
         </div>
     {% else %}
         <div class="text-center">
-            <h2>You have no pets</h2>
-            <a href="{% url 'create' %}" class="btn btn-success">Add Pet Photo</a>
+            {% if nails.user_id == request.user.id %}
+                <h2>You have no nails</h2>
+                <a href="{% url 'create' %}" class="btn btn-success">Add Nails Photo</a>
+            {% else %}
+                <h2>This user has no nails photos</h2>
+            {% endif %}
         </div>
     {% endif %}
 {% endblock %}

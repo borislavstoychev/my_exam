@@ -1,7 +1,7 @@
 from django.contrib.auth import logout, login, get_user_model
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.contrib.auth import mixins as auth_mixins
 from django.views import generic
 
 
@@ -37,7 +37,7 @@ class SignOutView(View):
         return HttpResponseRedirect(settings.LOGIN_URL)
 
 
-class ProfileUpdateView(generic.UpdateView):
+class ProfileUpdateView(auth_mixins.LoginRequiredMixin, generic.UpdateView):
     model = Profile
     context_object_name = 'profile'  # your own name for the list as a template variable
     form_class = ProfileForm
@@ -47,11 +47,18 @@ class ProfileUpdateView(generic.UpdateView):
         url = reverse_lazy('profile details', kwargs={'pk': self.request.user.id})
         return url
 
+    # def dispatch(self, request, *args, **kwargs):
+    #     user_profile = self.request.user
+    #     profile = Profile.objects.get(pk=kwargs['pk'])
+    #     if profile.user_id != user_profile.id:
+    #         return self.handle_no_permission()
+    #     return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['nails'] = Nails.objects.filter(user_id=self.request.user)
+        context['nails'] = self.get_object().user.nails_set.all()
         return context
 
 

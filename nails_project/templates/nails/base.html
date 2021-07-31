@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load profile_comlete_notification %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     {% include 'common/header.html' %}
+    {% if user.is_authenticated %}
+        {% profile_complete_notification %}
+    {% endif %}
 </head>
 <body>
 <div class="container">
@@ -20,6 +23,8 @@
     {% include 'common/footer.html' %}
 </footer>
 <script src="{% static 'js/changeImage.js' %}"></script>
-<script src="{% static 'js/eit_images_view.js' %}"></script>
+<script src="{% static 'js/edit_images_view.js' %}"></script>
+<script src="{% static 'js/full_screen_images.js' %}"></script>
+<script src="{% static 'js/timeFormat.js' %}"></script>
 </html>
 
