@@ -1,11 +1,13 @@
 {% extends 'nails/base.html' %}
 {% block content %}
-    <div class="container">
-        <h1 class='text-center'>All nail photos</h1>
+    <p></p>
+    <h2>All feedback photos</h2>
+    <div class="row">
         <div class="row">
             {% for nail in nails %}
                 {% include 'nails/nail_to_list.html' %}
             {% endfor %}
         </div>
+    </div>
     </div>
 {% endblock %}

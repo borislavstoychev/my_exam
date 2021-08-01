@@ -17,12 +17,11 @@
                     <div class="card-body">
                         <h4 class="card-title">Weekly Schedule</h4>
                         {% for schedule in schedules %}
-                        <p class="card-text">{{ schedule }}</p>
+                        <p class="card-text" ><a href="{% url 'delete schedule' schedule.id %}">{{ schedule }}</a></p>
                         {% endfor %}
                     </div>
                 </div>
                 <div class="col-lg-3"></div>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
 {% endblock %}

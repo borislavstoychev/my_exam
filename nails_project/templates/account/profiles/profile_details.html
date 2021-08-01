@@ -9,8 +9,8 @@
             <h5>This is {{ profile.user }} profile</h5>
         {% endif %}
         {% if profile.profile_image %}
-            <img class="rounded-circle mb-3" src="{{ profile.profile_image.url }}" alt="" width="140"
-                 height="140">
+            <img class="rounded-3" src="{{ profile.profile_image.url }}" alt="" width="180"
+                 height="180">
         {% else %}
             <img class="rounded-circle mb-3" src="{% static 'images/profile.jpeg' %}" alt="" width="140"
                  height="140">
@@ -35,8 +35,8 @@
                         <div class="card" style="width: 18rem;">
                             <img src="{{ nail.image.url }}" class="card-img-top" alt="...">
                             <div class="card-body">
-                                <h5 class="card-title">{{ nail.type }} {{ nail.name }}, Age: {{ nail.age }}</h5>
-                                <p class="card-text">{{ nail.description }}</p>
+                                <h5 class="card-title">Type: {{ nail.type }}, Feedback: {{ nail.feedback }}</h5>
+                                <p class="card-text">Description: {{ nail.description }}</p>
                                 <p class="card-text"><strong>Owner: {{ nail.user }}</strong></p>
                                 <a href="{% url 'nail details' nail.id %}" class="btn btn-primary">See details</a>
                             </div>

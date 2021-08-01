@@ -112,5 +112,20 @@ html {
     scroll-behavior: smooth;
 }
 
+.look {
+    float: left;
+    margin-right: 28px;
+    max-width: 614px;
+    width: 100%;
+}
+
+@media(max-width: 700px) {
+
+.card {
+    margin-top: 20px;
+}
+
+}
+
 
 

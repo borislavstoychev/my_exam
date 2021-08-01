@@ -1,17 +1,14 @@
-from django.contrib.auth import logout, login, get_user_model
+from django.contrib.auth import logout, login, get_user_model, authenticate
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
 from django.contrib.auth import mixins as auth_mixins
 from django.views import generic
-
-
-# Create your views here.
+from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from nails_project import settings
 from nails_project.accounts.forms import SignUpForm, SignInForm, ProfileForm
 from nails_project.accounts.models import Profile
-from nails_project.sonq_nails.models import Nails
 
 UserModel = get_user_model()
 
@@ -20,7 +17,15 @@ class SignUpView(generic.CreateView):
     template_name = 'account/auth/sign_up.html'
     model = UserModel
     form_class = SignUpForm
-    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        form.save()
+        user = authenticate(
+            username=form.cleaned_data["email"],
+            password=form.cleaned_data["password1"],
+        )
+        login(self.request, user)
+        return redirect('home')
 
 
 class SignInView(LoginView):
@@ -57,7 +62,7 @@ class ProfileUpdateView(auth_mixins.LoginRequiredMixin, generic.UpdateView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
+        # Add in a QuerySet of all the nails
         context['nails'] = self.get_object().user.nails_set.all()
         return context
 

@@ -16,3 +16,23 @@ class NailForm(forms.ModelForm):
     class Meta:
         model = Nails
         exclude = ('user', 'is_complete')
+
+
+class TypeFilterForm(forms.ModelForm):
+    class Meta:
+        model = Nails
+        fields = ("type", )
+    # MANICURE = 'M'
+    # PEDICURE = 'P'
+    # ALL = 'A'
+    # CHOICES = [
+    #         (ALL, 'All'),
+    #         (MANICURE, 'Manicure'),
+    #         (PEDICURE, 'Pedicure'),
+    #         (PEDICURE, 'Else'),
+    #     ]
+    # type = forms.ChoiceField(
+    #     required=False,
+    #     choices=CHOICES,
+    #     widget=forms.Select(attrs={'style': 'width:10%; font-size: 20px; text-align: center;', 'class': 'form-select'})
+    # )

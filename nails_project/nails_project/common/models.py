@@ -18,7 +18,13 @@ class Comment(models.Model):
 
 class Schedule(models.Model):
     date = models.DateField()
-    time = models.TimeField()
+    start_time = models.TimeField(blank=True, null=True)
+    end_time = models.TimeField(blank=True, null=True)
+    available = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"On Date:{self.date.strftime('%m/%d/%Y')} Available hour:{self.time.strftime('%H:%M')}"
+        if self.start_time and self.end_time:
+            return f"On Date:{self.date.strftime('%m/%d/%Y')} Available hours:{self.start_time.strftime('%H:%M')} till {self.end_time.strftime('%H:%M')}"
+        else:
+            return "Not available!"
+

@@ -8,16 +8,16 @@ UserModel = get_user_model()
 
 
 class Nails(models.Model):
-    PEDICURE = 'pedicure'
-    MANICURE = 'manicure'
-    ELSE = 'else'
+    PEDICURE = 'Pedicure'
+    MANICURE = 'Manicure'
+    ELSE = 'Else'
     NAILS_TYPE = (
         (PEDICURE, "Pedicure"),
         (MANICURE, 'Manicure'),
         (ELSE, 'Else'),
     )
     type = models.CharField(max_length=10, choices=NAILS_TYPE, default=ELSE)
-    title = models.CharField(max_length=7)
+    feedback = models.CharField(max_length=50)
     description = models.TextField(blank=False)
     image = models.ImageField(upload_to='images/nails')
     user = models.ForeignKey(

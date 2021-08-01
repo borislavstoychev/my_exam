@@ -20,7 +20,7 @@ class CommentForm(forms.ModelForm):
 class ScheduleForm(forms.ModelForm):
     class Meta:
         model = Schedule
-        fields = ('date', 'time')
+        fields = '__all__'
         widgets = {
             'date': forms.DateInput(
                 attrs={
@@ -29,16 +29,29 @@ class ScheduleForm(forms.ModelForm):
                     'is_required': True,
                 },
             ),
-            'time': forms.TimeInput(
-                format='%H:%M',
+            'start_time': forms.TimeInput(
                 attrs={
                     'type': 'text',
                     'class': 'form-control',
-                    'is_required': True,
-                    'placeholder': 'Time',
+                    'is_required': False,
+                    'placeholder': 'Start Time for example 09:00',
+                }
+            ),
+            'end_time': forms.TimeInput(
+                attrs={
+                    'type': 'text',
+                    'class': 'form-control',
+                    'is_required': False,
+                    'placeholder': 'End Time end for example 22:22',
+                }
+            ),
+            'available': forms.NullBooleanSelect(
+                attrs={
+                    'class': "form-select"
                 }
             )
         }
+
 
 
 

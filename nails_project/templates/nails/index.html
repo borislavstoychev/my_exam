@@ -32,6 +32,24 @@
     {#    </div>#}
     <div id="about">
     {% include 'nails/about_me.html' %}
+    <h2>Feedback: {{ nails.count }}</h2>
+    <div class="row">
+            <div class="row">
+                {% for nail in nails %}
+                    <div class="col-lg-4">
+                        <div class="card" style="width: 18rem;">
+                            <img src="{{ nail.image.url }}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ nail.type }} Feedback: {{ nail.feedback }}</h5>
+                                <p class="card-text">{{ nail.description }}</p>
+                                <p class="card-text"><strong>Owner: {{ nail.user }}</strong></p>
+                                <a href="{% url 'nail details' nail.id %}" class="btn btn-primary">See details</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 {% endblock %}
 
