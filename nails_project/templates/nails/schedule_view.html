@@ -1,0 +1,37 @@
+{% extends 'nails/base.html' %}
+{% load static %}
+{% block content %}
+    <p></p>
+    <h2>{{ current_month }}</h2>
+    <div class="row">
+        <div class="row">
+            {% for schedule in schedules %}
+                {% if schedule.available %}
+                    <div class="col-lg-2">
+                        <div>
+                            <img class="rounded-circle" src="{% static 'images/clock5.svg' %}"
+                                 alt="..." width="100"
+                                 height="100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ schedule.date|date:"l" }} {{ schedule }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-lg-2">
+                        <div>
+                            <img class="rounded-circle" src="{% static 'images/not-available.svg' %}"
+                                 alt="..." width="100"
+                                 height="100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ schedule.date|date:"l" }} {{ schedule }}</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+{% endblock %}

@@ -67,5 +67,17 @@ class ProfileUpdateView(auth_mixins.LoginRequiredMixin, generic.UpdateView):
         return context
 
 
+class ProfileDeleteView(auth_mixins.LoginRequiredMixin, generic.DeleteView):
+    model = UserModel
+    template_name = 'account/profiles/profile_delete.html'
+    success_url = reverse_lazy('sign up user')
+
+    def dispatch(self, request, *args, **kwargs):
+        profile = self.get_object()
+        if profile.id != request.user.id:
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
+
+
 
 

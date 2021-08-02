@@ -21,6 +21,11 @@
                     {% csrf_token %}
                     {{ form }}
                     <button class="btn btn-primary mt-2">Update</button>
+                    {% if not user.is_staff %}
+                        <a class="btn btn-danger mt-2" href="{% url 'profile delete' user.id %}">Delete profile</a>
+                    {% else %}
+                        <a class="btn btn-danger mt-2" href="{% url 'schedule nails' %}">Make yor schedule</a>
+                    {% endif %}
                 </form>
             {% endif %}
         </div>

@@ -24,7 +24,7 @@ class Schedule(models.Model):
 
     def __str__(self):
         if self.start_time and self.end_time:
-            return f"On Date:{self.date.strftime('%m/%d/%Y')} Available hours:{self.start_time.strftime('%H:%M')} till {self.end_time.strftime('%H:%M')}"
+            return f"Date:{self.date.strftime('%d/%m')} {self.start_time.strftime('%H:%M')} - {self.end_time.strftime('%H:%M')}"
         else:
-            return "Not available!"
+            return f"Date:{self.date.strftime('%d/%m')} Not available!"
 

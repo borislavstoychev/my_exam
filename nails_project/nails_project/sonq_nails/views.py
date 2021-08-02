@@ -1,9 +1,8 @@
-from django.shortcuts import render, redirect
+from datetime import date
+from django.shortcuts import redirect
 from django.views import generic
 from django.contrib.auth import mixins as auth_mixins
 from django.urls import reverse_lazy
-
-from nails_project.accounts.models import Profile
 from nails_project.common.forms import CommentForm, ScheduleForm
 from nails_project.common.models import Schedule
 from nails_project.sonq_nails.forms import NailForm
@@ -14,6 +13,23 @@ class NailsListView(generic.ListView):
     model = Nails
     template_name = 'nails/nails_list.html'
     context_object_name = 'nails'
+
+
+class ScheduleListView(generic.ListView):
+    model = Schedule
+    template_name = 'nails/schedule_view.html'
+    context_object_name = 'schedules'
+    months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+              'November', 'December']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        schedules = Schedule.objects.all().order_by('date', 'start_time')
+        context["schedules"] = schedules
+        today = date.today()
+        current_month = self.months[today.month]
+        context['current_month'] = current_month
+        return context
 
 
 class NailsCommentView(auth_mixins.LoginRequiredMixin, generic.FormView):
@@ -38,7 +54,7 @@ class ScheduleCreateView(auth_mixins.LoginRequiredMixin, generic.FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        schedules = Schedule.objects.all()
+        schedules = Schedule.objects.all().order_by('date')
         context['schedules'] = schedules
         return context
 

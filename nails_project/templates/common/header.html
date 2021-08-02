@@ -25,21 +25,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list nails' %}">All nail photos</a>
+                    <a class="nav-link" href="{% url 'list nails' %}">All nails photos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link scroll" href="#about">About Me</a>
+                    <a class="nav-link scroll" href="{% url 'home' %}#about">About me</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                       aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Separated link</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'schedule view' %}">My schedule</a>
                 </li>
             </ul>
         {% else %}
@@ -52,24 +44,16 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list nails' %}">All nail photos</a>
+                    <a class="nav-link" href="{% url 'list nails' %}">All nails photos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'create' %}">Create</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}#about">About</a>
+                    <a class="nav-link" href="{% url 'home' %}#about">About me</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                       aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Separated link</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'schedule view' %}">My schedule</a>
                 </li>
             </ul>
         {% endif %}
