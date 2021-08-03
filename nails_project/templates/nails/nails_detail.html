@@ -14,17 +14,17 @@
                 <p class="mt-2">Description: {{ nails.description }}</p>
                 {% if is_owner %}
                     <div>
-                        <a href="{% url 'edit' nails.pk %}" class="btn btn-success">Edit</a>
-                        <a href="{% url 'delete' nails.pk %}" class="btn btn-danger">Delete</a>
+                        <a href="{% url 'edit nails' nails.pk %}" class="btn btn-success">Edit</a>
+                        <a href="{% url 'delete nails' nails.pk %}" class="btn btn-danger">Delete</a>
                     </div>
                 {% endif %}
                 <p></p>
                 {% if not is_owner %}
                     {% if not is_liked_by_user %}
-                        <a href="{% url 'like nail' nails.id %}"><img src="{% static 'images/heart2.svg' %}"
+                        <a href="{% url 'like nails' nails.id %}"><img src="{% static 'images/heart2.svg' %}"
                                                                       style="width: 35px; height: 30px;"></a>
                     {% else %}
-                        <a href="{% url 'like nail' nails.id %}"><img  src="{% static 'images/heart.svg' %}"
+                        <a href="{% url 'like nails' nails.id %}"><img  src="{% static 'images/heart.svg' %}"
                                                                       style="width: 35px; height: 30px;"></a>
                     {% endif %}
                 {% endif %}

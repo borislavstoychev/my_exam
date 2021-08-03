@@ -127,5 +127,45 @@ html {
 
 }
 
+.table {
+    column-fill: balance;
+    margin-top: 40px;
+    text-transform: uppercase;
+    width: 80%;
+}
+
+.table table {
+    width: 100%;
+    border-spacing: 10px;
+    /*background-color: white;*/
+}
+
+.table table tr {
+    column-fill: balance;
+    background-color: #3a8fd9;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: unset;
+}
+
+.table table th {
+     column-fill: balance;
+    background-color: #e83283;
+    color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.table table tfoot tr td {
+    margin-top: 10px;
+    color: #fff;
+    background-color: #e83283;
+}
+
+#table_container {
+    position: sticky;
+    top: 0;
+}
+
 
 

@@ -25,13 +25,19 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list nails' %}">All nails photos</a>
+                    <a class="nav-link" href="{% url 'list nails' %}">All feedback</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link scroll" href="{% url 'home' %}#about">About me</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link scroll" href="{% url 'home' %}#just">Just to you</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'schedule view' %}">My schedule</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}#contact">Contact me</a>
                 </li>
             </ul>
         {% else %}
@@ -44,16 +50,22 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list nails' %}">All nails photos</a>
+                    <a class="nav-link" href="{% url 'list nails' %}">All feedback</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'create' %}">Create</a>
+                    <a class="nav-link" href="{% url 'create nails' %}">Leave feedback</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'home' %}#about">About me</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link scroll" href="{% url 'home' %}#just">Just to you</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'schedule view' %}">My schedule</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}#contact">Contact me</a>
                 </li>
             </ul>
         {% endif %}
@@ -64,11 +76,12 @@
                 <a class="nav-link" title="Sign out from site" href={% url 'sign out user' %}>Sign
                     Out</a>
             {% else %}
-                <a title="Go to linkedin account. Open in new window"
-                   href="https://www.linkedin.com/company/simplybook.me/" target="_blank" class="mr"></a>
+                <a title="Message me"
+                   href="https://m.me/bstoychev" target="_blank" class="mr"></a>
             {% endif %}
         </div>
         </div>
         </div>
+    </div>
 </nav>
 

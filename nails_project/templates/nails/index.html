@@ -1,54 +1,59 @@
 {% extends 'nails/base.html' %}
 {% block content %}
     <p></p>
-    <h2>
+    <h2 style="font-size: 2.5rem;">
         Welcome to Sonya's nails
     </h2>
     <p></p>
     <div class="container">
         <img id="image" src="https://40plusstyle.com/wp-content/uploads/2013/07/nails1.jpg'"
-             style="width:80%; height: 1000px; opacity: 1; border-radius: 25%" alt="Nails">
+             style="width:80%; height: 1000px; opacity: 1; border-radius: 50%" alt="Nails">
         <p></p>
         <h2 class="bottom-left">
             <button type="button" class="btn-primary">Вход</button>
         </h2>
         <ul>
-            <div class="top-left">Локация: гр. Петрич</div>
-            <div class="top-right">Телефон: +359 877 595 926</div>
+            <div class="top-left" style="font-family: Snell Rounded, cursive; font-size: 1.5rem;">Локация: гр. Петрич
+            </div>
+            <div class="top-right" style="font-family: Snell Rounded, cursive; font-size: 1.5rem;">Телефон: +359 877 595
+                926
+            </div>
             <h2 class="bottom-right">
                 <button type="button" class="btn-primary">Създайте профил</button>
             </h2>
             <div class="centered">
-                <h1>
-                    <marquee behavior="scroll" direction="left">Мечтаеш за красиви нокти? Ето как можеш да ги имаш!
+                <h1 style=" text-shadow: -2px 2px 0 #efc7bf;font-family: Snell Rounded, cursive; font-weight: 100; font-size: 3.8rem;">
+                    <marquee behavior="scroll" direction="left">Превърнете грижата за себе си в удоволствие!
                     </marquee>
                 </h1>
             </div>
         </ul>
     </div>
-    {#    <div class="text-light text-center">#}
-    {#    <img id="image" src="https://40plusstyle.com/wp-content/uploads/2013/07/nails1.jpg'" style="width:100%; height: 800px; border-radius: 5%">#}
-    {#    <p></p>#}
-    {#    </div>#}
     <div id="about">
-    {% include 'nails/about_me.html' %}
-    <h2>Feedback: {{ nails.count }}</h2>
+        {% include 'nails/about_me.html' %}
+    </div>
+    <div id="just">
+        {% include 'nails/just_to_you.html' %}
+    </div>
+    <div id="contact">
+        {% include 'nails/contact_me.html' %}
+    </div>
+    <h2 style="font-size: 2.5rem;">Feedback: {{ nails.count }}</h2>
     <div class="row">
-            <div class="row">
-                {% for nail in nails %}
-                    <div class="col-lg-4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="{{ nail.image.url }}" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ nail.type }} Feedback: {{ nail.feedback }}</h5>
-                                <p class="card-text">{{ nail.description }}</p>
-                                <p class="card-text"><strong>Owner: {{ nail.user }}</strong></p>
-                                <a href="{% url 'nail details' nail.id %}" class="btn btn-primary">See details</a>
-                            </div>
+        <div class="row">
+            {% for nail in nails %}
+                <div class="col-lg-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ nail.image.url }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ nail.type }} Feedback: {{ nail.feedback }}</h5>
+                            <p class="card-text">{{ nail.description }}</p>
+                            <p class="card-text"><strong>Owner: {{ nail.user }}</strong></p>
+                            <a href="{% url 'nails details' nail.id %}" class="btn btn-primary">See details</a>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

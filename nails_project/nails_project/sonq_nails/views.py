@@ -5,7 +5,7 @@ from django.contrib.auth import mixins as auth_mixins
 from django.urls import reverse_lazy
 from nails_project.common.forms import CommentForm, ScheduleForm
 from nails_project.common.models import Schedule
-from nails_project.sonq_nails.forms import NailForm
+from nails_project.sonq_nails.forms import NailsForm
 from nails_project.sonq_nails.models import Nails, Like
 
 
@@ -13,23 +13,6 @@ class NailsListView(generic.ListView):
     model = Nails
     template_name = 'nails/nails_list.html'
     context_object_name = 'nails'
-
-
-class ScheduleListView(generic.ListView):
-    model = Schedule
-    template_name = 'nails/schedule_view.html'
-    context_object_name = 'schedules'
-    months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-              'November', 'December']
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        schedules = Schedule.objects.all().order_by('date', 'start_time')
-        context["schedules"] = schedules
-        today = date.today()
-        current_month = self.months[today.month]
-        context['current_month'] = current_month
-        return context
 
 
 class NailsCommentView(auth_mixins.LoginRequiredMixin, generic.FormView):
@@ -40,44 +23,7 @@ class NailsCommentView(auth_mixins.LoginRequiredMixin, generic.FormView):
         comment.user = self.request.user
         comment.nails = Nails.objects.get(pk=self.kwargs['pk'])
         comment.save()
-        return redirect('nail details', self.kwargs['pk'])
-
-
-class ScheduleCreateView(auth_mixins.LoginRequiredMixin, generic.FormView):
-    form_class = ScheduleForm
-    template_name = 'nails/schedule.html'
-
-    def form_valid(self, form):
-        schedule = form.save(commit=False)
-        schedule.save()
-        return super().form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        schedules = Schedule.objects.all().order_by('date')
-        context['schedules'] = schedules
-        return context
-
-    def get_success_url(self):
-        url = reverse_lazy('schedule nails')
-        return url
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_staff:
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
-
-
-class ScheduleDeleteView(auth_mixins.LoginRequiredMixin, generic.DeleteView):
-    model = Schedule
-    template_name = 'nails/schedule_delete.html'
-    success_url = reverse_lazy('schedule nails')
-
-    def dispatch(self, request, *args, **kwargs):
-        schedule = self.get_object()
-        if not request.user.is_staff:
-            return self.handle_no_permission()
-        return super().dispatch(request, *args, **kwargs)
+        return redirect('nails details', self.kwargs['pk'])
 
 
 class NailsDetailsView(generic.DetailView):
@@ -111,7 +57,7 @@ class NailsLikeView(auth_mixins.LoginRequiredMixin, generic.View):
             )
             like.save()
 
-        return redirect('nail details', nails.id)
+        return redirect('nails details', nails.id)
 
     def dispatch(self, request, *args, **kwargs):
         user_profile = self.request.user
@@ -124,10 +70,10 @@ class NailsLikeView(auth_mixins.LoginRequiredMixin, generic.View):
 class NailsCreateView(auth_mixins.LoginRequiredMixin, generic.CreateView):
     template_name = 'nails/nails_create.html'
     model = Nails
-    form_class = NailForm
+    form_class = NailsForm
 
     def get_success_url(self):
-        url = reverse_lazy('nail details', kwargs={'pk': self.object.id})
+        url = reverse_lazy('nails details', kwargs={'pk': self.object.id})
         return url
 
     def form_valid(self, form):
@@ -135,16 +81,15 @@ class NailsCreateView(auth_mixins.LoginRequiredMixin, generic.CreateView):
         nails.user = self.request.user
         nails.save()
         return super().form_valid(form)
-        # return redirect('pet details or comment', pet.id)
 
 
 class NailsEditView(auth_mixins.LoginRequiredMixin, generic.UpdateView):
     template_name = 'nails/nails_edit.html'
     model = Nails
-    form_class = NailForm
+    form_class = NailsForm
 
     def get_success_url(self):
-        url = reverse_lazy('nail details', kwargs={'pk': self.object.id})
+        url = reverse_lazy('nails details', kwargs={'pk': self.object.id})
         return url
 
     def dispatch(self, request, *args, **kwargs):

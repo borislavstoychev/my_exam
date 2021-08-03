@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, pre_delete
 from django.dispatch import receiver
 
-from nails_project.accounts.models  import Profile
+from nails_project.accounts.models import Profile
+from nails_project.sonq_nails.models import Nails
 
 UserModel = get_user_model()
 
@@ -32,3 +33,17 @@ def check_is_complete(sender, instance, **kwargs):
             new_avatar = instance.profile_image
             if old_avatar and old_avatar.url != new_avatar.url:
                 old_avatar.delete(save=False)
+
+
+@receiver(pre_delete, sender=UserModel)
+def delete_avatar_when_account_deleted(sender, instance, **kwargs):
+    if instance.pk:
+        try:
+            old_avatar = Profile.objects.get(pk=instance.pk).profile_image
+            old_user_media = Nails.objects.filter(user_id=instance.pk)
+        except Profile.DoesNotExist:
+            return
+        else:
+            old_avatar.delete(save=False)
+            for media in old_user_media:
+                media.image.delete(save=False)
