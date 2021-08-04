@@ -37,6 +37,12 @@ class SignInForm(BootstrapFormMixin, AuthenticationForm):
 
     user = None
 
+    def __init__(self, *args, **kwargs):
+        self.error_messages['invalid_login'] = f'Please enter a correct %(username)s and password.\n' \
+                                               'Note that your profile must be activated!\n' \
+                                               'Note that both fields may be case-sensitive.'
+        super().__init__(*args, **kwargs)
+
     def clean(self):
         email = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
