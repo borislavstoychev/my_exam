@@ -9,25 +9,13 @@ from nails_project.core.mixins import BootstrapFormMixin
 UserModel = get_user_model()
 
 
-class ProfileForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        for (_, field) in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
-
+class ProfileForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ('user', 'is_complete')
 
 
-class SignUpForm(UserCreationForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        for (_, field) in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
-
+class SignUpForm(BootstrapFormMixin, UserCreationForm):
     class Meta:
         model = UserModel
         fields = ("email",)
@@ -35,12 +23,11 @@ class SignUpForm(UserCreationForm):
 
 class SignInForm(BootstrapFormMixin, AuthenticationForm):
 
-    user = None
-
     def __init__(self, *args, **kwargs):
         self.error_messages['invalid_login'] = f'Please enter a correct %(username)s and password.\n' \
-                                               'Note that your profile must be activated!\n' \
+                                               'Note that your profile must be activated, check your email!\n' \
                                                'Note that both fields may be case-sensitive.'
+        self.user = None
         super().__init__(*args, **kwargs)
 
     def clean(self):

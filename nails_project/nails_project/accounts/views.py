@@ -1,14 +1,14 @@
-from django.contrib.auth import logout, login, get_user_model, authenticate
+from django.contrib.auth import logout, login, get_user_model
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
 from django.contrib.auth import mixins as auth_mixins
 from django.views import generic
-from django.http import HttpResponse
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from nails_project import settings
 from nails_project.accounts.forms import SignUpForm, SignInForm, ProfileForm
-from nails_project.accounts.models import Profile, NailsUser
+from nails_project.accounts.models import Profile
+# Django registration with confirmation email
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -17,7 +17,7 @@ from django.utils.encoding import force_bytes
 from django.core.mail import EmailMessage
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
-
+from django.http import HttpResponse
 from nails_project.core.email_threading import EmailThread
 
 UserModel = get_user_model()
@@ -45,7 +45,7 @@ class SignUpView(generic.CreateView):
             mail_subject, message, to=[to_email]
         )
         EmailThread(email).start()
-        return redirect('sign in user')
+        return render(self.request, 'account/auth/inactive_profile.html')
 
 
 def activate(request, uidb64, token):
@@ -58,7 +58,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        return redirect('home')
+        return redirect('profile details', user.id)
     else:
         return HttpResponse('Activation link is invalid!')
 
@@ -87,13 +87,6 @@ class ProfileUpdateView(auth_mixins.LoginRequiredMixin, generic.UpdateView):
         url = reverse_lazy('profile details', kwargs={'pk': self.request.user.id})
         return url
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     user_profile = self.request.user
-    #     profile = Profile.objects.get(pk=kwargs['pk'])
-    #     if profile.user_id != user_profile.id:
-    #         return self.handle_no_permission()
-    #     return super().dispatch(request, *args, **kwargs)
-
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
@@ -112,7 +105,3 @@ class ProfileDeleteView(auth_mixins.LoginRequiredMixin, generic.DeleteView):
         if profile.id != request.user.id:
             return self.handle_no_permission()
         return super().dispatch(request, *args, **kwargs)
-
-
-
-
