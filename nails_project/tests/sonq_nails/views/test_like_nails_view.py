@@ -12,7 +12,7 @@ class LikePetViewTests(NailsTestUtils, UserTestUtils, NailsProjectTestCase):
         nails = self.create_nails(
             type=Nails.MANICURE,
             feedback='Test',
-            description='TEst nails description',
+            description='Test nails description',
             image='path/to/image.png',
             user=nails_user,
         )

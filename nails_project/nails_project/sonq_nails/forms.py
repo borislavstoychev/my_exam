@@ -15,5 +15,5 @@ class NailsForm(forms.ModelForm):
 
     class Meta:
         model = Nails
-        exclude = ('user', 'is_complete')
+        exclude = ('user', )
 

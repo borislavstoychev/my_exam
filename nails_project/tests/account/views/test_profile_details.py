@@ -9,15 +9,15 @@ from nails_project.sonq_nails.models import Nails
 from tests.base.tests import NailsProjectTestCase
 
 
-class ProfileDetailsTest(NailsProjectTestCase):
-    def test_getDetails_whenLoggedInUserWithNoPets_shouldGetDetailsWithNoPets(self):
+class ProfileUpdateDetailsTest(NailsProjectTestCase):
+    def test_getDetails_whenLoggedInUserWithNoNails_shouldGetDetailsWithNoNails(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse('profile details', kwargs={'pk': self.user.id}))
         self.assertListEmpty(list(response.context['nails']))
         self.assertEqual(self.user.id, response.context['profile'].user_id)
 
     def test_getDetails_whenLoggedInUserWithFeedback_shouldGetDetails(self):
-        feedback = Nails.objects.create(
+        nails = Nails.objects.create(
             type=Nails.MANICURE,
             feedback='Test',
             description='TEst nails description',
@@ -31,7 +31,7 @@ class ProfileDetailsTest(NailsProjectTestCase):
 
         self.assertEqual(200, response.status_code)
         self.assertEqual(self.user.id, response.context['profile'].user_id)
-        self.assertListEqual([feedback], list(response.context['nails']))
+        self.assertListEqual([nails], list(response.context['nails']))
 
     def test_postDetails_whenUserLoggedInWithoutImage_shouldChangeImage(self):
         path_to_image = join(settings.BASE_DIR, 'tests', 'media', 'test.jpg')
