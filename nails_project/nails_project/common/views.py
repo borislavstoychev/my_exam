@@ -9,6 +9,7 @@ from nails_project.sonq_nails.views import NailsListView
 
 class HomePage(NailsListView):
     template_name = 'nails/index.html'
+    paginate_by = 8
 
 
 class ScheduleCreateView(auth_mixins.LoginRequiredMixin, generic.FormView):

@@ -28,13 +28,13 @@ class NailsCreateTest(NailsTestUtils, UserTestUtils, NailsProjectTestCase):
 
         response = self.client.post(reverse('create nails'), data={
             "type": Nails.MANICURE,
-            'feedback': 'Test',
+            'feedback': Nails.POSITIVE,
             'description': 'TEst nails description',
             'image': file,
             'user': self.user
         })
         self.assertEqual(302, response.status_code)
-        self.assertEqual(Nails.objects.last().feedback, "Test")
+        self.assertEqual(Nails.objects.last().feedback, "Positive")
 
     def test_creatNails_whenUserNotExist_shouldBeRedirectToSignIn(self):
         data = {

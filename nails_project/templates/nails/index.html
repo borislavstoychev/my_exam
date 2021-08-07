@@ -9,18 +9,21 @@
         <img id="image" src="https://40plusstyle.com/wp-content/uploads/2013/07/nails1.jpg'"
              style="width:80%; height: 1000px; opacity: 1; border-radius: 50%" alt="Nails">
         <p></p>
-        <h2 class="bottom-left">
-            <button type="button" class="btn-primary">Вход</button>
-        </h2>
+        {% if not user.is_authenticated %}
+            <h2 class="bottom-left">
+                <a  class="btn btn-primary" style="font-size: 1.5rem" href="{% url 'sign in user' %}">Вход</a>
+            </h2>
+            <h2 class="bottom-right">
+                <a class="btn btn-primary" style="font-size: 1.5rem" href="{% url 'sign up user' %}">Създайте профил</a>
+            </h2>
+        {% endif %}
         <ul>
             <div class="top-left" style="font-family: Snell Rounded, cursive; font-size: 1.5rem;">Локация: гр. Петрич
             </div>
             <div class="top-right" style="font-family: Snell Rounded, cursive; font-size: 1.5rem;">Телефон: +359 877 595
                 926
             </div>
-            <h2 class="bottom-right">
-                <button type="button" class="btn-primary">Създайте профил</button>
-            </h2>
+
             <div class="centered">
                 <h1 style=" text-shadow: -2px 2px 0 #efc7bf;font-family: Snell Rounded, cursive; font-weight: 100; font-size: 3.8rem;">
                     <marquee behavior="scroll" direction="left">Превърнете грижата за себе си в удоволствие!
@@ -42,13 +45,12 @@
     <div class="row">
         <div class="row">
             {% for nail in nails %}
-                <div class="col-lg-4">
-                    <div class="card" style="width: 18rem;">
-                        <img src="{{ nail.image.url }}" class="card-img-top" alt="...">
+                <div class="col-lg-3">
+                    <div class="card" style="width: 18rem; margin-bottom: 30px">
+                        <img data-enlargeable width="100" style="cursor: zoom-in; height: 200px"
+                             src="{{ nail.image.url }}" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">{{ nail.type }} Feedback: {{ nail.feedback }}</h5>
-                            <p class="card-text">{{ nail.description }}</p>
-                            <p class="card-text"><strong>Owner: {{ nail.user }}</strong></p>
+                            <h5 class="card-title">{{ nail.type }}</h5>
                             <a href="{% url 'nails details' nail.id %}" class="btn btn-primary">See details</a>
                         </div>
                     </div>
@@ -56,6 +58,24 @@
             {% endfor %}
         </div>
     </div>
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 {% endblock %}
 
 

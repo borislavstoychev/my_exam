@@ -4,46 +4,50 @@
     <div class="container">
         <div class="d-flex">
             <div class="d-inline p-2 w-50">
-                <img data-enlargeable width="100" style="cursor: zoom-in" src="{{ nails.image.url }}" class="w-50 rounded mx-auto d-block" alt="{{ nails.description }}">
+                <img data-enlargeable width="100" style="cursor: zoom-in" src="{{ nails.image.url }}"
+                     class="w-50 rounded mx-auto d-block" alt="{{ nails.description }}">
             </div>
             <div class="d-inline p-2 w-50">
                 <div class="d-flex justify-content-between">
                     <h5><u>Type:</u> {{ nails.type }}</h5>
-                    <h5><u>Title:</u> {{ nails.title }}</h5>
+                    <h5><u>Feedback:</u> {{ nails.feedback }}</h5>
+                    <h5> <a href="{% url 'profile details' nails.user_id %}">{{ nails.user }}</a></h5>
                 </div>
-                <p class="mt-2">Description: {{ nails.description }}</p>
+                <p class="mt-2"><b>Description:</b> {{ nails.description }}</p>
                 {% if is_owner %}
                     <div>
                         <a href="{% url 'edit nails' nails.pk %}" class="btn btn-success">Edit</a>
                         <a href="{% url 'delete nails' nails.pk %}" class="btn btn-danger">Delete</a>
                     </div>
-                {% endif %}
-                <p></p>
-                {% if not is_owner %}
-                    {% if not is_liked_by_user %}
-                        <a href="{% url 'like nails' nails.id %}"><img src="{% static 'images/heart2.svg' %}"
-                                                                      style="width: 35px; height: 30px;"></a>
-                    {% else %}
-                        <a href="{% url 'like nails' nails.id %}"><img  src="{% static 'images/heart.svg' %}"
-                                                                      style="width: 35px; height: 30px;"></a>
-                    {% endif %}
+                {% else %}
+                    <a href="{% url 'like nails' nails.id %}">
+                        {% if not is_liked_by_user %}
+                            <img src="{% static 'images/heart2.svg' %}"
+                                 style="width: 35px; height: 30px;">
+                        {% else %}
+                            <img src="{% static 'images/heart.svg' %}"
+                                 style="width: 35px; height: 30px;">
+                            </a>
+                        {% endif %}
                 {% endif %}
                 <p class="mt-2">Likes: {{ nails.likes_count }}</p>
             </div>
         </div>
         <div class="form-control">
-            {% if comments %}
-                {% for comment in comments %}
+            {% if user.is_authenticated %}
+                {% if comments %}
+                    {% for comment in comments %}
+                        <div class="box">
+                            <a href="{% url 'profile details' comment.user_id %}">{{ comment.user }}:</a>
+                            <h5><em>{{ comment.comment }}</em></h5>
+                            <hr>
+                        </div>
+                    {% endfor %}
+                {% else %}
                     <div class="box">
-                        <a href="{% url 'profile details' comment.user_id %}">{{ comment.user }}:</a>
-                        <h5><em>{{ comment.comment }}</em></h5>
-                        <hr>
+                        <h3>There are no comments for this nail. </h3>
                     </div>
-                {% endfor %}
-            {% else %}
-                <div class="box">
-                    <h3>There are no comments for this nail. </h3>
-                </div>
+                {% endif %}
             {% endif %}
             <div class="box">
                 <form method="post" action="{% url 'comment nails' nails.id %}">

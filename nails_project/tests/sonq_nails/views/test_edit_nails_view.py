@@ -20,7 +20,7 @@ class NailsEditTest(NailsTestUtils, UserTestUtils, NailsProjectTestCase):
         self.client.force_login(self.user)
         nails = self.create_nails(
             type=Nails.MANICURE,
-            feedback='Test',
+            feedback=Nails.POSITIVE,
             description='Test nails description',
             image='path/to/image.png',
             user=self.user,
@@ -30,7 +30,7 @@ class NailsEditTest(NailsTestUtils, UserTestUtils, NailsProjectTestCase):
             'pk': nails.id,
         }), data={
             "type": 'Manicure',
-            'feedback': 'positive',
+            'feedback': 'Negative',
             'description': 'TEst nails description',
             'image': 'path/to/image.png',
             'use': self.user,
@@ -39,7 +39,7 @@ class NailsEditTest(NailsTestUtils, UserTestUtils, NailsProjectTestCase):
         self.assertEqual(302, response.status_code)
 
         nails_exists = Nails.objects.filter(
-            feedback='positive'
+            feedback='Negative'
         ) \
             .exists()
 

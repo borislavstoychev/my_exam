@@ -8,7 +8,7 @@ class NailsForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         for (_, field) in self.fields.items():
-            if _ == "type":
+            if _ == "type" or _ == "feedback":
                 field.widget.attrs['class'] = 'form-select'
             else:
                 field.widget.attrs['class'] = 'form-control'
