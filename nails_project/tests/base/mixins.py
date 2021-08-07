@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 
-from nails_project.common.models import Comment
+from nails_project.common.models import Comment, Schedule
 from nails_project.sonq_nails.models import Nails, Like
 
 UserModel = get_user_model()
@@ -27,6 +27,12 @@ class NailsTestUtils:
             user=like_user,
         )
         return nails
+
+
+class ScheduleTestUtils:
+
+    def create_schedule(self, **kwargs):
+        return Schedule.objects.create(**kwargs)
 
 
 class UserTestUtils:

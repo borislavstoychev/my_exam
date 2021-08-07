@@ -7,6 +7,20 @@ from tests.base.tests import NailsProjectTestCase
 
 
 class NailsDetailsTest(NailsTestUtils, UserTestUtils, NailsProjectTestCase):
+
+    def test_NailsDetailsVieName_and_templateName(self):
+        self.client.force_login(self.user)
+        nails = self.create_nails(
+            type=Nails.MANICURE,
+            feedback='Test',
+            description='Test nails description',
+            image='path/to/image.png',
+            user=self.user,
+        )
+        response = self.client.get(reverse('nails details', kwargs={'pk': nails.id}))
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed(response, template_name='nails/nails_detail.html')
+
     def test_getNailsDetails_whenNailsDoesNotExists(self):
         self.client.force_login(self.user)
 

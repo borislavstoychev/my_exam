@@ -10,6 +10,13 @@ from tests.base.tests import NailsProjectTestCase
 
 
 class ProfileUpdateDetailsTest(NailsProjectTestCase):
+
+    def test_profileDetailsVieName_and_templateName(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('profile details', kwargs={"pk": self.user.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name='account/profiles/profile_details.html')
+
     def test_getDetails_whenLoggedInUserWithNoNails_shouldGetDetailsWithNoNails(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse('profile details', kwargs={'pk': self.user.id}))

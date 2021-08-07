@@ -44,7 +44,7 @@ class NailsEditTest(NailsTestUtils, UserTestUtils, NailsProjectTestCase):
             .exists()
 
         self.assertTrue(nails_exists)
-        self.assertEqual('/nails/details/1/', response.url)
+        self.assertEqual(f'/nails/details/{nails.id}/', response.url)
 
     def test_editNails_whenNailsExistsAndNotOwner_shouldReturnForbidden(self):
         self.client.force_login(self.user)

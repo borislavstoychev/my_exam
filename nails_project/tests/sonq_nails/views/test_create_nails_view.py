@@ -11,6 +11,12 @@ from tests.base.tests import NailsProjectTestCase
 
 class NailsCreateTest(NailsTestUtils, UserTestUtils, NailsProjectTestCase):
 
+    def test_NailsCreateVieName_and_templateName(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('create nails'))
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed(response, template_name='nails/nails_create.html')
+
     def test_createNails_whenUserExist_shouldRedirectToNailsDetails(self):
         path_to_image = join(settings.BASE_DIR, 'tests', 'media', 'test.jpg')
         file_name = f'{random.randint(1, 10000)}-test.jpg'

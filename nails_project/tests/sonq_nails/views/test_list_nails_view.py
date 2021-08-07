@@ -5,6 +5,13 @@ from tests.base.tests import NailsProjectTestCase
 
 
 class NailsListViewTest(NailsTestUtils, UserTestUtils,NailsProjectTestCase):
+
+    def test_NailsListVieName_and_templateName(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('list nails'))
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed(response, template_name='nails/nails_list.html')
+
     def test_getList_whenLoggedInUserWithNoNails_shouldGetListWithNoNails(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse('list nails'))

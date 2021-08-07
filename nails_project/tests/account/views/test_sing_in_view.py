@@ -4,6 +4,12 @@ from django.urls import reverse
 
 
 class SingInViewTest(NailsTestUtils, UserTestUtils,NailsProjectTestCase):
+
+    def test_singInVieName_and_templateName(self):
+        response = self.client.get(reverse('sign in user'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name='account/auth/sign_in.html')
+
     def test_singIn_whenUserIsActive_shouldGetHomePageWithUser(self):
         nails_user = self.create_user(email='nails@user.com', password='12345qwe', is_active=True)
         response = self.client.post(reverse('sign in user'), data={

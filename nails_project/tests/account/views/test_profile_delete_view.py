@@ -8,6 +8,12 @@ from tests.base.tests import NailsProjectTestCase
 
 class ProfileDeleteTest(NailsTestUtils, UserTestUtils, NailsProjectTestCase):
 
+    def test_deleteProfileVieName_and_templateName(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse('profile delete', kwargs={"pk":self.user.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name='account/profiles/profile_delete.html')
+
     def test_deleteProfile_whenProfileDoesNotExists_shouldBeNotFound(self):
         self.client.force_login(self.user)
 

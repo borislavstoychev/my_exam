@@ -9,12 +9,7 @@ class SignUpPageTests(NailsProjectTestCase, UserTestUtils, NailsTestUtils):
         self.email = 'testuser@email.com'
         self.password = 'boreto95478'
 
-    def test_signup_page_url(self):
-        response = self.client.get(reverse('sign up user'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, template_name='account/auth/sign_up.html')
-
-    def test_signup_page_view_name(self):
+    def test_signupPage_viewName_andTemplate(self):
         response = self.client.get(reverse('sign up user'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name='account/auth/sign_up.html')

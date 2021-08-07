@@ -7,6 +7,19 @@ from tests.base.tests import NailsProjectTestCase
 
 class NailsDeleteTest(NailsTestUtils, UserTestUtils, NailsProjectTestCase):
 
+    def test_NailsDeleteVieName_and_templateName(self):
+        self.client.force_login(self.user)
+        nails = self.create_nails(
+            type=Nails.MANICURE,
+            feedback='Test',
+            description='Test nails description',
+            image='path/to/image.png',
+            user=self.user,
+        )
+        response = self.client.get(reverse('delete nails', kwargs={'pk': nails.id}))
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed(response, template_name='nails/nails_delete.html')
+
     def test_deleteNails_whenNailsDoesNotExists_shouldBeNotFound(self):
         self.client.force_login(self.user)
 
