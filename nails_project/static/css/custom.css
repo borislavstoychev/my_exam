@@ -168,5 +168,9 @@ html {
     top: 0;
 }
 
+.box {
+    overflow-wrap: break-word
+}
+
 
 

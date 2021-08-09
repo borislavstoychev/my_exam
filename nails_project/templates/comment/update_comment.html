@@ -1,0 +1,13 @@
+{% extends 'nails/base.html' %}
+{% block content %}
+    <p></p>
+    <div class="box">
+        <h2>Edit your comment</h2>
+        <form method="post" action="{% url 'update comment' comment.id %}">
+            {% csrf_token %}
+            {{ form }}
+            <button class="btn btn-primary mt-2" type="submit">Edit comment</button>
+            <a class="btn btn-danger mt-2" href="{% url 'delete comment' comment.id %}">Delete comment</a>
+        </form>
+    </div>
+{% endblock %}

@@ -1,15 +1,9 @@
 from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth import mixins as auth_mixins
-
 from nails_project.common.forms import ScheduleForm
 from nails_project.common.models import Schedule
 from nails_project.sonq_nails.views import NailsListView
-
-
-class HomePage(NailsListView):
-    template_name = 'nails/index.html'
-    paginate_by = 8
 
 
 class ScheduleCreateView(auth_mixins.LoginRequiredMixin, generic.FormView):
@@ -77,4 +71,9 @@ class ScheduleDeleteView(auth_mixins.LoginRequiredMixin, generic.DeleteView):
         if not request.user.is_staff:
             return self.handle_no_permission()
         return super().dispatch(request, *args, **kwargs)
+
+
+class HomePage(NailsListView, ScheduleListView):
+    template_name = 'nails/index.html'
+    paginate_by = 8
 

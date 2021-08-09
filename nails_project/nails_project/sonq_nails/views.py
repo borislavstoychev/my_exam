@@ -4,7 +4,7 @@ from django.views import generic
 from django.contrib.auth import mixins as auth_mixins
 from django.urls import reverse_lazy
 from nails_project.common.forms import CommentForm, ScheduleForm
-from nails_project.common.models import Schedule
+from nails_project.common.models import Schedule, Comment
 from nails_project.sonq_nails.forms import NailsForm
 from nails_project.sonq_nails.models import Nails, Like
 
@@ -81,6 +81,32 @@ class NailsCreateView(auth_mixins.LoginRequiredMixin, generic.CreateView):
         nails.user = self.request.user
         nails.save()
         return super().form_valid(form)
+
+
+class CommentUpdateView(auth_mixins.LoginRequiredMixin, generic.UpdateView):
+    model = Comment
+    context_object_name = 'comment'  # your own name for the list as a template variable
+    form_class = CommentForm
+    template_name = 'comment/update_comment.html'
+
+    def get_success_url(self):
+        url = reverse_lazy('nails details', kwargs={'pk': self.object.nails.id})
+        return url
+
+
+class CommentDeleteView(auth_mixins.LoginRequiredMixin, generic.DeleteView):
+    model = Comment
+    template_name = 'comment/delete_comment.html'
+
+    def get_success_url(self):
+        url = reverse_lazy('nails details', kwargs={'pk': self.object.nails.id})
+        return url
+
+    def dispatch(self, request, *args, **kwargs):
+        comment = self.get_object()
+        if comment.user_id != request.user.id:
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
 
 
 class NailsEditView(auth_mixins.LoginRequiredMixin, generic.UpdateView):
