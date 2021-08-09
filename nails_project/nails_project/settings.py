@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from os.path import join
 from pathlib import Path
+
+import cloudinary as cloudinary
 from django.urls import reverse_lazy
 
 
@@ -157,6 +159,14 @@ EMAIL_HOST_USER = "test.bobby.demo@gmail.com"
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# cloudinary configuration
+cloudinary.config(
+    cloud_name="dveogwez3",
+    api_key=os.environ.get('CLOUDINARY_API_KEY'),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
+    secure=True,
+)
 
 
 

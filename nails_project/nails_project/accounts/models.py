@@ -3,6 +3,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.core.validators import RegexValidator
 from nails_project.accounts.manager import NailsUserManager
+from cloudinary.models import CloudinaryField
 
 
 class NailsUser(AbstractBaseUser, PermissionsMixin):
@@ -45,8 +46,8 @@ class Profile(models.Model):
         blank=True,
         null=True,
     )
-    profile_image = models.ImageField(
-        upload_to='images/profiles',
+    profile_image = CloudinaryField(
+        resource_type='image',
         blank=True,
     )
     is_complete = models.BooleanField(

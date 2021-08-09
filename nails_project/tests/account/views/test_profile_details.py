@@ -76,6 +76,6 @@ class ProfileUpdateDetailsTest(NailsProjectTestCase):
 
         profile = Profile.objects.get(pk=self.user.id)
         image = path_to_image.split("/").pop()
-        profile_image = str(profile.profile_image).split("/").pop()
+        profile_image = str(profile.profile_image).split("/").pop()+'.jpg'
 
         self.assertEqual(image, profile_image)

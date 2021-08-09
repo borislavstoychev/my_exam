@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from cloudinary.models import CloudinaryField
+
 
 
 # Create your models here.
@@ -23,7 +25,9 @@ class Nails(models.Model):
     type = models.CharField(max_length=10, choices=NAILS_TYPE, default=MANICURE)
     feedback = models.CharField(max_length=10, choices=FEEDBACK_TYPE, default=POSITIVE)
     description = models.TextField(blank=False)
-    image = models.ImageField(upload_to='images/nails')
+    image = CloudinaryField(
+        resource_type='image',
+    )
     user = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
@@ -36,5 +40,6 @@ class Like(models.Model):
         UserModel,
         on_delete=models.CASCADE,
     )
+
 
 from .signals import *

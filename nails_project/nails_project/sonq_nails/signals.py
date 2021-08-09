@@ -1,6 +1,6 @@
 from django.dispatch import receiver
 from django.db.models.signals import pre_save
-
+from cloudinary import uploader
 from nails_project.sonq_nails.models import Nails
 
 
@@ -12,6 +12,8 @@ def remove_old_image(sender, instance, **kwargs):
         except Nails.DoesNotExist:
             return
         else:
-            new_image = instance.image
-            if old_image and old_image.url != new_image.url:
-                old_image.delete(save=False)
+            try:
+                new_image = instance.image.url
+            except AttributeError:
+                uploader.destroy(old_image.public_id)
+
