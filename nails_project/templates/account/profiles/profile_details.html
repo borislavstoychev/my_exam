@@ -9,7 +9,7 @@
             <h5>This is {{ profile.user }} profile</h5>
         {% endif %}
         {% if profile.profile_image %}
-            <img class="rounded-3" src="{{ profile.profile_image.url }}" alt="" width="180"
+            <img class="rounded-circle mb-3" src="{{ profile.profile_image.url }}" alt="" width="180"
                  height="180">
         {% else %}
             <img class="rounded-circle mb-3" src="{% static 'images/profile.jpeg' %}" alt="" width="140"
@@ -26,6 +26,9 @@
                     {% else %}
                         <a class="btn btn-danger mt-2" href="{% url 'schedule nails' %}">Make yor schedule</a>
                     {% endif %}
+                <p></p>
+                <span>If you want to change your password<a href="{% url 'password_change' %}"
+                                     style="color:orange"> click here!</a></span>
                 </form>
             {% endif %}
         </div>
@@ -33,9 +36,9 @@
     <hr>
     {% if nails %}
         {% if profile.user == user %}
-            <h2 class='text-center'>These are your nails photos</h2>
+            <h2 class='text-center'>These are your feedback photos</h2>
         {% else %}
-            <h2 class='text-center'>These are his nails photos</h2>
+            <h2 class='text-center'>These are his feedback photos</h2>
         {% endif %}
         <div class="row">
             <div class="row">
@@ -55,11 +58,11 @@
         </div>
     {% else %}
         <div class="text-center">
-            {% if nails.user_id == request.user.id %}
-                <h2>You have no nails</h2>
-                <a href="{% url 'create' %}" class="btn btn-success">Add Nails Photo</a>
+            {% if profile.user_id == request.user.id %}
+                <h2>You have no feedback</h2>
+                <a href="{% url 'create nails' %}" class="btn btn-success">Leave Feedback Photo</a>
             {% else %}
-                <h2>This user has no nails photos</h2>
+                <h2>This user has no feedback photos</h2>
             {% endif %}
         </div>
     {% endif %}
