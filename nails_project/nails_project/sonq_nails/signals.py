@@ -5,7 +5,7 @@ from nails_project.sonq_nails.models import Nails
 
 
 @receiver(pre_save, sender=Nails)
-def check_is_complete(sender, instance, **kwargs):
+def remove_old_image(sender, instance, **kwargs):
     if instance.pk:
         try:
             old_image = Nails.objects.get(pk=instance.pk).image

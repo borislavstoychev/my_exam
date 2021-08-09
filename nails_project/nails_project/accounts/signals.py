@@ -36,7 +36,7 @@ def check_is_complete(sender, instance, **kwargs):
 
 
 @receiver(pre_delete, sender=UserModel)
-def delete_avatar_when_account_deleted(sender, instance, **kwargs):
+def delete_media_when_account_deleted(sender, instance, **kwargs):
     if instance.pk:
         try:
             old_avatar = Profile.objects.get(pk=instance.pk).profile_image
