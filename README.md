@@ -30,7 +30,7 @@ Mandatory requirements/Must haves
 ### Optional/Bonuses
 #### <li> Responsive web design :heavy_check_mark: </li>
 #### <li> Class-based views :heavy_check_mark: </li>
-#### <li> Extended Django user [account models](https://github.com/borislavstoychev/my_exam/blob/main/nails_project/nails_project/accounts/models.py) :heavy_check_mark: </li>
+#### <li> Extended Django user. [account models](https://github.com/borislavstoychev/my_exam/blob/main/nails_project/nails_project/accounts/models.py) :heavy_check_mark: </li>
 #### <li> Documentation/ Swagger :x: </li>
 #### <li> Use a file storage cloud API e.g., Cloudinary :heavy_check_mark:, Dropbox, Google Drive or other for storing the files </li>
 #### <li> Implement Microservice architecture in your application. :x: </li>
