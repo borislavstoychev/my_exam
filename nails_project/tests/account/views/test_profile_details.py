@@ -6,10 +6,11 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 from nails_project.accounts.models import Profile
 from nails_project.sonq_nails.models import Nails
+from tests.base.mixins import UserTestUtils
 from tests.base.tests import NailsProjectTestCase
 
 
-class ProfileUpdateDetailsTest(NailsProjectTestCase):
+class ProfileUpdateDetailsTest(UserTestUtils, NailsProjectTestCase):
 
     def test_profileDetailsVieName_and_templateName(self):
         self.client.force_login(self.user)
@@ -58,7 +59,7 @@ class ProfileUpdateDetailsTest(NailsProjectTestCase):
         self.assertEqual(302, response.status_code)
 
         profile = Profile.objects.get(pk=self.user.id)
-        self.assertTrue(str(profile.profile_image).endswith(file_name))
+        self.assertTrue(str(profile.profile_image.format).endswith('jpg'))
 
     def test_postDetails_whenUserLoggedInWithImage_shouldChangeImage(self):
         path_to_image = join(settings.BASE_DIR, 'tests', 'media', 'test.jpg')
@@ -79,3 +80,31 @@ class ProfileUpdateDetailsTest(NailsProjectTestCase):
         profile_image = str(profile.profile_image).split("/").pop()+'.jpg'
 
         self.assertEqual(image, profile_image)
+
+    def test_postDetails_whenUserLoggedInWithoutData_shouldUpdateData(self):
+        path_to_image = join(settings.BASE_DIR, 'tests', 'media', 'test.jpg')
+        profile = Profile.objects.get(pk=self.user.id)
+        profile.profile_image = path_to_image
+        profile.save()
+
+        self.client.force_login(self.user)
+
+        response = self.client.post(reverse('profile details', kwargs={'pk': self.user.id}), data={
+            'profile_image': path_to_image,
+            'first_name': 'Borislav',
+            'last_name': 'Stoychev',
+            'phone_number': '0878799548',
+            'age': 21
+        })
+
+        self.assertEqual(302, response.status_code)
+
+        profile = Profile.objects.get(pk=self.user.id)
+        image = path_to_image.split("/").pop()
+        profile_image = str(profile.profile_image).split("/").pop()+'.jpg'
+
+        self.assertEqual(image, profile_image)
+        self.assertEqual('Borislav', profile.first_name)
+        self.assertEqual("Stoychev", profile.last_name)
+        self.assertEqual(['0878799548'], [profile.phone_number])
+        self.assertEqual(21, profile.age)

@@ -33,7 +33,7 @@ class TestNailsModel(NailsProjectTestCase):
         self.assertEqual('Manicure', obj.type)
         self.assertEqual('Positive', obj.feedback)
         self.assertEqual('description', obj.description)
-        self.assertEqual('images/nails/' + self.file_name, obj.image)
+        self.assertEqual('jpg', obj.image.format)
         self.assertEqual(self.user, obj.user)
 
     def test_saveModel_whenInvalid_shouldBeInvalid_imageError(self):

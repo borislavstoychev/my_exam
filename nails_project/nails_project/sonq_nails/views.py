@@ -93,6 +93,12 @@ class CommentUpdateView(auth_mixins.LoginRequiredMixin, generic.UpdateView):
         url = reverse_lazy('nails details', kwargs={'pk': self.object.nails.id})
         return url
 
+    def dispatch(self, request, *args, **kwargs):
+        comment = self.get_object()
+        if comment.user_id != request.user.id:
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
+
 
 class CommentDeleteView(auth_mixins.LoginRequiredMixin, generic.DeleteView):
     model = Comment

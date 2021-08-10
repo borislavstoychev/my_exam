@@ -38,3 +38,6 @@ class ScheduleTestUtils:
 class UserTestUtils:
     def create_user(self, **kwargs):
         return UserModel.objects.create_user(**kwargs)
+
+    def create_superuser(self, **kwargs):
+        return UserModel.objects.create_superuser
