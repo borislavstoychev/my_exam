@@ -35,12 +35,10 @@ class NailsUserAdmin(UserAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'phone_number', 'age', 'profile_image', 'user', 'is_complete')
-    list_filter = ('first_name', 'user', 'phone_number')
-    ordering = ('first_name',)
-
-    def has_add_permission(self, request,):
-        return False
+    """
+    user field should not be changed
+    """
+    readonly_fields = ('user',)
 
 
 

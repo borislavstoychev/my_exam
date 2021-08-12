@@ -60,5 +60,8 @@ class Profile(models.Model):
         primary_key=True,
     )
 
+    def __str__(self):
+        return self.user.email or ""
+
 
 from .signals import *
