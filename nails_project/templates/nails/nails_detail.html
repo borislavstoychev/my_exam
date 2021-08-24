@@ -1,4 +1,4 @@
-{% extends 'nails/base.html' %}
+{% extends 'common/base.html' %}
 {% load static %}
 {% block content %}
     <div class="container">
@@ -8,10 +8,10 @@
                      class="w-50 rounded mx-auto d-block" alt="{{ nails.description }}">
             </div>
             <div class="d-inline p-2 w-50">
-                <div class="d-flex justify-content-between">
-                    <h5><u>Type:</u> {{ nails.type }}</h5>
-                    <h5><u>Feedback:</u> {{ nails.feedback }}</h5>
-                    <h5><a href="{% url 'profile details' nails.user_id %}">{{ nails.user }}</a></h5>
+                <div class="d-inline justify-content-between">
+                    <h5><a class="nav-link" href="{% url 'profile details' nails.user_id %}">{% include 'common/avatar_navi.html' %}{{ nails.user }}</a></h5>
+                    <h5>Type: {{ nails.type }}</h5>
+                    <h5>Feedback: {{ nails.feedback }}</h5>
                 </div>
                 <p class="mt-2"><b>Description:</b> {{ nails.description }}</p>
                 {% if is_owner %}
@@ -47,18 +47,18 @@
                 {% if comments %}
                     {% for comment in comments %}
                         <div class="card border-secondary mb-3">
-                            {% if user.id == comment.user_id %}
-                                <a href="{% url 'update comment' comment.id %}">{{ comment.user }}:</a>
-                            {% else %}
-                                <a href="{% url 'profile details' comment.user_id %}">{{ comment.user }}:</a>
-
-                            {% endif %}
-                            <h5><em>{{ comment.comment }}</em></h5>
+                            <div class="row row-cols-1 justify-content-between">
+                                <div class="col text-start">
+                                    {% include 'common/avatar.html' %}
+                                    {{ comment.user }}:
+                                    <h5><em>{{ comment.comment }}</em></h5>
+                                </div>
+                            </div>
                         </div>
                     {% endfor %}
                 {% else %}
                     <div>
-                        <h2>There are no comments for this nail. </h2>
+                        <h2>There are no comments for this feedback. </h2>
                     </div>
                 {% endif %}
             {% endif %}

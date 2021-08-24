@@ -4,6 +4,7 @@ from nails_project.sonq_nails import views
 
 urlpatterns = [
     path('', views.NailsListView.as_view(), name='list nails'),
+    path('about/', views.AboutView.as_view(), name='about'),
     path('comment/<int:pk>/', views.NailsCommentView.as_view(), name='comment nails'),
     path('details/<int:pk>/', views.NailsDetailsView.as_view(), name='nails details'),
     path('like/<int:pk>/', views.NailsLikeView.as_view(), name='like nails'),

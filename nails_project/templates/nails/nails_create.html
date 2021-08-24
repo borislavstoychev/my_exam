@@ -1,27 +1,18 @@
-{% extends 'nails/base.html' %}
+{% extends 'common/base.html' %}
 {% block content %}
     <p></p>
-    <h2 class="text-center" style="font-size: 2.5rem;">Create nails photo</h2>
-    <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
-            <form method="post" action="{% url 'create nails' %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.errors }}
-                <div class="form-group has-success">
-                    <label class="form-label mt-4" for="inputValid">Nails Type</label>
-                    {{ form.type }}
-                    <label class="form-label mt-4" for="inputValid">Nails Feedback</label>
-                    {{ form.feedback }}
-                    <label class="form-label mt-4" for="inputValid">Nails Description</label>
-                    {{ form.description }}
-                    <label class="form-label mt-4" for="inputValid">Choice image</label>
-                    {{ form.image }}
-                    <div class="valid-feedback">Success! You've done it.</div>
-                    <button class="btn btn-primary form-label mt-4" type="submit">Create</button>
-                </div>
-            </form>
+    <div class="container">
+        <h2 class="text-center" style="font-size: 2.5rem;">Create feedback</h2>
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <form method="post" class="furniture-form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form }}
+                    <button class="btn btn-primary mt-2" type="submit">Create</button>
+                </form>
+            </div>
+            <div class="col-lg-3"></div>
         </div>
-    </div>
     </div>
 {% endblock %}

@@ -163,8 +163,8 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # cloudinary configuration
 cloudinary.config(
     cloud_name="dveogwez3",
-    api_key=os.environ.get('CLOUDINARY_API_KEY'),
-    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
+    api_key=os.environ.get('CLOUDINARY_API_KEY', '732635235387472'),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET', 'BKCV2drakVfajaxoSK7NCWXMAMw'),
     secure=True,
 )
 

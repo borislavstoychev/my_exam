@@ -15,6 +15,10 @@ class NailsListView(generic.ListView):
     context_object_name = 'nails'
 
 
+class AboutView(generic.TemplateView):
+    template_name = 'nails/about_me.html'
+
+
 class NailsCommentView(auth_mixins.LoginRequiredMixin, generic.FormView):
     form_class = CommentForm
 

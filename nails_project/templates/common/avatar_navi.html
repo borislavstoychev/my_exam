@@ -1,0 +1,6 @@
+{% if user.profile.profile_image %}
+    <img src="{{ user.profile.profile_image.url }}" alt="Avatar" class="avatar">
+{% else %}
+    <img src="/static/images/profile.jpg" alt="Avatar"
+         class="avatar">
+{% endif %}

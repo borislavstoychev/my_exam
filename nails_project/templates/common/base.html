@@ -1,0 +1,45 @@
+{% load static %}
+{% load profile_comlete_notification %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Home</a>
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            {% if user.is_authenticated %}
+                {% include 'common/header_with_profile.html' %}
+            {% else %}
+                {% include 'common/header_with_no_profile.html' %}
+            {% endif %}
+        </div>
+    </nav>
+    <title>Sonq nails</title>
+</head>
+<body>
+{% if user.is_authenticated %}
+    {% profile_complete_notification %}
+{% endif %}
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+<p></p>
+<footer id="footer" class="container">
+    {% include 'common/footer.html' %}
+</footer>
+<script src="{% static 'js/changeImage.js' %}"></script>
+<script src="{% static 'js/editImagesView.js' %}"></script>
+<script src="{% static 'js/fullScreenImages.js' %}"></script>
+</html>
+

@@ -1,85 +1,40 @@
-{% extends 'nails/base.html' %}
+{% extends 'common/base.html' %}
 {% block content %}
     <p></p>
-    <h2 style="font-size: 2.5rem;">
-        Welcome to Sonya's nails
-    </h2>
-    <p></p>
-    <div class="container">
-        <img id="image" src="https://40plusstyle.com/wp-content/uploads/2013/07/nails1.jpg'"
-             style="width:80%; height: 1000px; opacity: 1; border-radius: 50%" alt="Nails">
-        <p></p>
-        {% if not user.is_authenticated %}
-            <h2 class="bottom-left">
-                <a  class="btn btn-primary" style="font-size: 1.5rem" href="{% url 'sign in user' %}">Вход</a>
-            </h2>
-            <h2 class="bottom-right">
-                <a class="btn btn-primary" style="font-size: 1.5rem" href="{% url 'sign up user' %}">Създайте профил</a>
-            </h2>
-        {% endif %}
-        <ul>
-            <div class="top-left" style="font-family: Snell Rounded, cursive; font-size: 1.5rem;">Локация: гр. Петрич
-            </div>
-            <div class="top-right" style="font-family: Snell Rounded, cursive; font-size: 1.5rem;">Телефон: +359 877 595
-                595
-            </div>
-
-            <div class="centered">
-                <h1 style=" text-shadow: -2px 2px 0 #efc7bf;font-family: Snell Rounded, cursive; font-weight: 100; font-size: 3.8rem;">
-                    <marquee behavior="scroll" direction="left">Превърнете грижата за себе си в удоволствие!
-                    </marquee>
-                </h1>
-            </div>
-        </ul>
-    </div>
-    <div id="about">
-        {% include 'nails/about_me.html' %}
-    </div>
-    <div id="just">
-        {% include 'nails/just_to_you.html' %}
-    </div>
-    <div id="schedule">
-    {% include 'schedule/schedule_list.html' %}
-    </div>
-    <div id="contact">
-        {% include 'nails/contact_me.html' %}
-    </div>
-    <h2 style="font-size: 2.5rem;">Feedback: {{ nails.count }}</h2>
-    <div class="row">
-        <div class="row">
-            {% for nail in nails %}
-                <div class="col-lg-3">
-                    <div class="card" style="width: 18rem; margin-bottom: 30px">
-                        <img data-enlargeable width="100" style="cursor: zoom-in; height: 200px"
-                             src="{{ nail.image.url }}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ nail.type }}</h5>
-                            <a href="{% url 'nails details' nail.id %}" class="btn btn-primary">See details</a>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+    <div class="card mb-3">
+        <h2 class="card-header" style="color: #e93c89">Fresh Vision</h2>
+        <div class="card-body">
+            <h5 class="card-title">Внимание към детайла</h5>
+            <h6 class="card-subtitle text-muted">Едно от отличителните неща в моя салон е в подхода към услугата маникюр
+                и педикюр. Те
+                вече не са допълваща услуга, а напротив – основна и единствена. Работя по изграден от мен метод,
+                така клиентите получават гарантирано качество на услугата и внимание към най-малкия детайл.</h6>
+        </div>
+        <img src="/static/images/intro.jpg" class="d-block user-select-none"
+             aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice"
+             viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle" alt="grads">
+        <rect width="100%" height="100%" fill="#868e96"></rect>
+        <text x="50%" y="50%" fill="#dee2e6" dy=".3em"></text>
+        </img>
+        <div class="card-body">
+{#            <a href="#" class="card-link">Card link</a>#}
+{#            <a href="#" class="card-link">Another link</a>#}
+        </div>
+        <div class="card-footer text-muted">
         </div>
     </div>
-    <div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">My Mission</h2>
+            <h6 class="card-subtitle mb-2 text-muted">To You</h6>
+            <p class="card-text">Да създавам красиви и здрави нокти! Да напомня на всяко момиче, че трябва да отделя
+                време за себе си и да му се наслади от началото до края. Малките неща, които правят света ни
+                по-хубав, превръщаме в големи и запомнящи се преживявания.Защото вярваме, че красотата е въпрос
+                на самоусещане, а не наложена норма за външен вид. По същия начин модата и тенденциите не са
+                обременяващ модел на подражание, а вдъхновяваща посока, с която да се забавляваме, докато
+                намираме свои начини да я интерпретираме.</p>
+        </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 {% endblock %}
-
 
 

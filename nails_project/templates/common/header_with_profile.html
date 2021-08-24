@@ -1,0 +1,28 @@
+<div class="navbar-collapse collapse" id="navbarColor01" style="">
+    <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+            <a class="nav-link" title="Go to profile detail"
+               href={% url 'profile details' user.id %}>{% include 'common/avatar_navi.html' %} {{ request.user }}!
+                <span class="visually-hidden">(current)</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'create nails' %}">Leave Feedback</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'list nails' %}">Feedback</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'schedule view' %}">Schedule</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav m-auto">
+        <li class="nav-item">
+            <a class="nav-link" title="Sign out from site" href={% url 'sign out user' %}>Sign Out</a>
+        </li>
+    </ul>
+</div>
+

@@ -1,13 +1,12 @@
-{% extends 'nails/base.html' %}
+{% extends 'common/base.html' %}
 {% block content %}
     <p></p>
     <h2>All feedback photos</h2>
     <div class="row">
-        <div class="row">
+{#        <div class="row-cols-auto">#}
             {% for nail in nails %}
                 {% include 'nails/nail_to_list.html' %}
             {% endfor %}
-        </div>
-    </div>
+{#        </div>#}
     </div>
 {% endblock %}
