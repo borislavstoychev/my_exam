@@ -9,7 +9,7 @@
             </div>
             <div class="d-inline p-2 w-50">
                 <div class="d-inline justify-content-between">
-                    <h5><a class="nav-link" href="{% url 'profile details' nails.user_id %}">{% include 'common/avatar_navi.html' %}{{ nails.user }}</a></h5>
+                    <h5><a class="nav-link" href="{% url 'profile details' nails.user_id %}">{% include 'common/avatar_details.html' %}{{ nails.user }}</a></h5>
                     <h5>Type: {{ nails.type }}</h5>
                     <h5>Feedback: {{ nails.feedback }}</h5>
                 </div>
